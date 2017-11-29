@@ -24,4 +24,15 @@ def about(request):
     return render(request,'doggofindr/about.html')
 
 def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username,password=raw_password)
+            login(request, user)
+            return home(request)
+    else:
+        form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form':form})

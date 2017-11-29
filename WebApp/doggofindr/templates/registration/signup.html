@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/login.css">
+  </head>
+
+  <body id="bodyLogin">
+      <div id="logoDiv">
+        <img id="logo" class="fitImage" src="/media/static/logo.png">
+        <img id="logo" class="fitImage" src="/media/static/background.jpg">
+      </div>
+      <div id="divLogin">
+        <form id="formLogin" method="post">{% csrf_token %}
+          <div class="inputDiv">
+            <input type="text" class="inputDiv" name="username" maxlength="150" autofocus required id="id_username" placeholder="username"/>
+          </div>
+          <div class="inputDiv">
+            <input type="password" class="inputDiv" name="password1" required id="id_password1" placeholder="password" />
+          </div>
+          <div class="inputDiv">
+            <input type="password" class="inputDiv" name="password2" required id="id_password2" placeholder="confirm Password"/>
+          </div>
+          <div class="inputDiv">
+            <a id="signUp" class="loginBtn" type="button" href="{% url 'login' %}">Log In</a>
+            <button id="signUp" class="loginBtn" type="submit"> Sign Up </button>
+          </div>
+        </form>
+      </div>
+      {% if form.errors %}
+        <p id=messageLogin> <li>Your password can't be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can't be a commonly used password.</li><li>Your password can't be entirely numeric.</li></p>
+      {% endif %}
+  </body>
+</html>
