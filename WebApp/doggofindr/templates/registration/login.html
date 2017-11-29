@@ -1,1 +1,32 @@
-]
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/login.css">
+  </head>
+
+  <body id="bodyLogin">
+      <div id="logoDiv">
+        <img id="logo" class="fitImage" src="/media/static/logo.png">
+        <img id="logo" class="fitImage" src="/media/static/background.jpg">
+      </div>
+      <div id="divLogin">
+        <form id="formLogin" method="post" action="{% url 'login' %}">{% csrf_token %}
+          <div class="inputDiv">
+            <input id = "id_username" class="inputDiv" name = "username" type="text" placeholder="username"/>
+          </div>
+          <div class="inputDiv">
+            <input id = "id_password" class="inputDiv" name = "password" type="password" placeholder="password"/>
+          </div>
+          <div class="inputDiv">
+            <button id="submitLogin" class="loginBtn" type="submit"> Login </button>
+            <a id="signUp" class="loginBtn" type="button" href="{% url 'doggofindr:signup' %}">Sign Up</a>
+          </div>
+        </form>
+      </div>
+      {% if form.errors %}
+        <p id=messageLogin> *Your username and password didn't match*</p>
+      {% endif %}
+  </body>
+</html>

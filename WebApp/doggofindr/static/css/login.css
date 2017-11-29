@@ -1,0 +1,63 @@
+#bodyLogin{
+  background: url('background.jpg')no-repeat ;
+  color: #0c0c0c;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  text-align: center;
+}
+#divLogin{
+  background: #efece6;
+  width: 50%;
+  min-width:150px;
+  margin:auto;
+  margin-top: 5%;
+  color: #fff;
+  font-size: 150%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 50px;
+  border-radius: 25px;
+  z-index: 1;
+}
+#formLogin{
+  width: 100%
+  border:1px, solid, #ccc;
+}
+#formLogin input{
+  border: 1px solid #ccc;
+  height:38px;
+  color: #0c0c0c;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+}
+.loginBtn{
+  background: #5da8da;
+  padding: 7px 12px;
+  border: 0;
+  color: #fff;
+  font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 7px;
+}
+.loginBtn:hover {
+  background: #cc4444;
+}
+#messageLogin{
+  color:#ddd;
+}
+#logoDiv{
+  width: 30%;
+  margin:auto;
+  margin-top:5%;
+
+}
+.inputDiv{
+  border-radius: 7px;
+  padding-bottom: 5px;
+  }
+.fitImage{
+  width: 100%;
+  object-fit: fill;
+}

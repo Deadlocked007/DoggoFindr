@@ -22,3 +22,6 @@ def home(request):
 
 def about(request):
     return render(request,'doggofindr/about.html')
+
+def signup(request):
+    return render(request, 'registration/signup.html', {'form':form})

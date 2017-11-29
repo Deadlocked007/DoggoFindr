@@ -3,6 +3,7 @@ from . import views
 from .views import(
     home,
     about,
+    signup,
 
 )
 
@@ -12,4 +13,5 @@ app_name = 'doggofindr'
 urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'^about/$', about, name='about'),
+    url(r'^signup/$', signup, name='signup'),
 ]
