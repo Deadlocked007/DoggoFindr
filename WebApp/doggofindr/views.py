@@ -23,6 +23,7 @@ def home(request):
 def about(request):
     return render(request,'doggofindr/about.html')
 
+@login_required
 def myPage(request):
     user = User.objects.get(username=request.user)
     imageList =[]
@@ -62,3 +63,28 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form':form})
+
+def deleteImg(request):
+    if request.method == 'GET':
+        start = request.GET.get("action",None)
+        deleteImgId =request.GET.get("imgId",None)
+        selectedImg = Image.objects.get(pk=deleteImgId)
+        selectedImg.delete()
+        if start != None:
+            data = {
+            'imageList':getImageList()
+            }
+        return JsonResponse(data)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def getImageList():
+    imageList = []
+    images = Image.objects.all()
+    for i in images:
+        imageList.append({
+            'id':i.id,
+            'url':i.imgFile.url,
+            'breedName':i.breedName,
+            'author':i.author,
+        })
+    return imageList
