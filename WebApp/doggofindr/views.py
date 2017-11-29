@@ -23,6 +23,32 @@ def home(request):
 def about(request):
     return render(request,'doggofindr/about.html')
 
+def myPage(request):
+    user = User.objects.get(username=request.user)
+    imageList =[]
+    imgs = Image.objects.all().order_by('-id')
+    for i in imgs:
+        if i.author == user:
+            imageList.append(i)
+    if request.method == 'POST':
+        print("request is POST")
+        images = request.FILES.getlist("files") #Get the file from HTML
+        if len(images) > 0 :
+            for count, x in enumerate(images):
+                formImg = ImageForm(request.POST or None, request.FILES or None)#create new image using the Django Form
+                new_img = formImg.save(commit=False) #Temporarily saving the new image but not in the database
+                new_img.imgFile = x #Set the image file as the file uploaded
+                new_img.author = request.user
+                new_img.breedName = "Unknown"
+                new_img.save() #Save the image in the database
+                print(new_img.imgFile)
+    user = request.user
+    context = {
+        "imgList" : imageList,
+        "user": user,
+    }
+    return render(request, 'doggofindr/myPage.html',context)
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

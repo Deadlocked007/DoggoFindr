@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" type="text/css" href="/static/css/index.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/static/js/index.js"></script>
+<script src="/static/js/myPage.js"></script>
+{% endblock %}
+{% block content %}
+<div id="masterDiv" class="masterDiv" align="center">
+  <div id="headDiv" class="masterDiv headDiv">
+    <div id="headTitleDiv" class="masterDiv headDiv">
+      <h1>Hello {{user}} !</h1>
+      <form id="imageForm" method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+        <input type="file" name="files" id="files" multiple hidden>
+        <label for="files"><span><i class="material-icons">file_upload</i></span>Upload</label>
+        <a id="uploadImage" class="iconBtn" type="button"><i class="material-icons">done</i>Done</a>
+        <a id="findBreed" class="iconBtn" type="button"><i class="material-icons">search</i>Find out Dog Breed</a>
+      </form>
+    </div>
+  </div>
+
+  <div id="content1Div" class="masterdiv" align="center">
+      {% for img in imgList %}
+        {% if img.imgFile %}
+        <div class="gridImgLayout container">
+          <div class="imgDiv">
+            <a target="_blank" href='{{img.imgFile.url}}'>
+              <img id={{img.id}} class="gridImg" src='{{img.imgFile.url}}'>
+            </a>
+          </div>
+          <div class="descDiv">
+            <h3>{{img.breedName}}</h3>
+            <p class="title">{{img.author}}</p>
+          </div>
+          <a id={{img.id}} class="deleteImg" role="submit"><i id="menu-icon" class="material-icons">delete</i></a>
+        </div>
+        {% endif %}
+      {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

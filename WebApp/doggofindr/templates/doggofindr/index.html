@@ -13,6 +13,31 @@
   </div>
 
   <div id="content1Div" class="masterdiv" align="center">
+      {% for img in imgList %}
+        {% if img.imgFile %}
+        <!-- <div class="responsive">
+          <div class="gallery">
+            <a target="_blank" href='{{img.imgFile.url}}'>
+              <img id={{img.id}} class="mySlides fitImage" src='{{img.imgFile.url}}' width="600" height="400">
+            </a>
+            <div class="desc">
+              Description
+            </div>
+          </div>
+        </div> -->
+        <div class="gridImgLayout container">
+          <div class="imgDiv">
+            <a target="_blank" href='{{img.imgFile.url}}'>
+              <img id={{img.id}} class="gridImg" src='{{img.imgFile.url}}'>
+            </a>
+          </div>
+          <div class="descDiv">
+            <h3>{{img.breedName}}</h3>
+            <p class="title">{{img.author}}</p>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
   </div>
 </div>
 
