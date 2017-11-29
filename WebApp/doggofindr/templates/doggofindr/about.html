@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" type="text/css" href="/static/css/index.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/static/js/index.js"></script>
+{% endblock %}
+{% block content %}
+<div id="masterDiv" class="masterDiv" align="center">
+  <div id="headDiv" class="masterDiv headDiv">
+    <div id="headTitleDiv" class="masterDiv headDiv">
+      <h1>Creators</h1>
+    </div>
+  </div>
+  <div id="content1Div" class="masterdiv" align="center">
+    <div class="box">
+    <div id= "sirajDiv" class="container gridImgLayout">
+      <div class="imgDiv">
+        <img src='/media/static/siraj.JPG' class="gridImg" alt="Siraj">
+      </div>
+      <div class="descDiv">
+        <h2>Siraj Zaneer</h2>
+        <p class="title">szaneer@purdue.edu</p>
+      </div>
+    </div>
+    <div id= "woosungDiv" class="container gridImgLayout">
+      <div class="imgDiv">
+        <img src='/media/static/woosung.JPG' class="gridImg" alt="Woosung">
+      </div>
+      <div class="descDiv">
+        <h2>Woosung Kim</h2>
+        <p class="title">kim898@purdue.edu</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

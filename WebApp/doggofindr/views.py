@@ -19,3 +19,6 @@ def home(request):
         "user": user,
     }
     return render(request, 'doggofindr/index.html',context)
+
+def about(request):
+    return render(request,'doggofindr/about.html')
