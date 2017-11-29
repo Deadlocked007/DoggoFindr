@@ -3,13 +3,18 @@ from django.template.context_processors import csrf
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
+import os
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth.models import User
 from .models import Image
 from.forms import ImageForm
+
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+import requests
+import json
 
 def home(request):
     imgs = Image.objects.all().order_by('-id')
@@ -25,6 +30,7 @@ def about(request):
 
 @login_required
 def myPage(request):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     user = User.objects.get(username=request.user)
     imageList =[]
     imgs = Image.objects.all().order_by('-id')
@@ -40,9 +46,29 @@ def myPage(request):
                 new_img = formImg.save(commit=False) #Temporarily saving the new image but not in the database
                 new_img.imgFile = x #Set the image file as the file uploaded
                 new_img.author = request.user
-                new_img.breedName = "Unknown"
                 new_img.save() #Save the image in the database
-                print(new_img.imgFile)
+                # path = os.path.join(BASE_DIR,new_img.imgFile.url)
+                # print("printing path: ", path)
+                # f = open(path,'rb')
+                # path = new_img.imgFile.url
+                print(BASE_DIR)
+                print(new_img.imgFile.url)
+                path = str(BASE_DIR) + str(new_img.imgFile.url)
+                print(path)
+                # path = "/Users/woosung/Desktop/cs252Git/DoggoFindr/WebApp/media/1.jpg"
+                f = open(path,'rb')
+
+                url = 'https://doggofindrapi.herokuapp.com/breed'
+                post_fields = {'image': f}
+                r = requests.post(url, files=post_fields)
+                json = r.json()
+                breed = json['breed']
+                for i in range(len(breed)):
+                	if breed[i] == "_":
+                		breed = breed[:i] + " " + breed[i+1:]
+                new_img.breedName = breed
+                new_img.save()
+
     user = request.user
     context = {
         "imgList" : imageList,
