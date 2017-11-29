@@ -10,6 +10,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Image
 from.forms import ImageForm
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 def home(request):
     imgs = Image.objects.all().order_by('-id')
@@ -40,9 +42,13 @@ def myPage(request):
                 new_img = formImg.save(commit=False) #Temporarily saving the new image but not in the database
                 new_img.imgFile = x #Set the image file as the file uploaded
                 new_img.author = request.user
-                new_img.breedName = "Unknown"
+                url = 'https://doggofindrapi.herokuapp.com/breed'
+                post_fields = {'image': x}
+
+                request = Request(url, urlencode(post_fields).encode())
+                json = urlopen(request).read().decode()
+                new_img.breedName = json['breed']
                 new_img.save() #Save the image in the database
-                print(new_img.imgFile)
     user = request.user
     context = {
         "imgList" : imageList,
