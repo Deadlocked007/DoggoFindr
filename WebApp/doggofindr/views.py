@@ -46,26 +46,22 @@ def myPage(request):
                 new_img = formImg.save(commit=False) #Temporarily saving the new image but not in the database
                 new_img.imgFile = x #Set the image file as the file uploaded
                 new_img.author = request.user
+                new_img.breedName = "Unknown"
                 new_img.save() #Save the image in the database
-                # path = os.path.join(BASE_DIR,new_img.imgFile.url)
-                # print("printing path: ", path)
-                # f = open(path,'rb')
-                # path = new_img.imgFile.url
-                print(BASE_DIR)
-                print(new_img.imgFile.url)
+
                 path = str(BASE_DIR) + str(new_img.imgFile.url)
                 print(path)
-                # path = "/Users/woosung/Desktop/cs252Git/DoggoFindr/WebApp/media/1.jpg"
                 f = open(path,'rb')
-
-                url = 'https://doggofindrapi.herokuapp.com/breed'
+                url = 'http://data.cs.purdue.edu:5000/breed'
                 post_fields = {'image': f}
                 r = requests.post(url, files=post_fields)
                 json = r.json()
                 breed = json['breed']
                 for i in range(len(breed)):
-                	if breed[i] == "_":
-                		breed = breed[:i] + " " + breed[i+1:]
+                    if breed[i] == "_":
+                        breed = breed[:i] + " " + breed[i+1:]
+                if json['dog'] == 'false':
+                    breed = "Human " + breed
                 new_img.breedName = breed
                 new_img.save()
 
@@ -75,6 +71,33 @@ def myPage(request):
         "user": user,
     }
     return render(request, 'doggofindr/myPage.html',context)
+
+# def findBreed(request):
+#     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#     if request.method == 'GET':
+#         start = request.GET.get("action",None)
+#         if start != None:
+#             imgs = Image.objects.all().order_by('-id')
+#             for i in imgs:
+#                 if i.breedName == "Unknown":
+#                     path = str(BASE_DIR) + str(i.imgFile.url)
+#                     print(path)
+#                     f = open(path,'rb')
+#                     url = 'https://doggofindrapi.herokuapp.com/breed'
+#                     post_fields = {'image': f}
+#                     r = requests.post(url, files=post_fields)
+#                     json = r.json()
+#                     breed = json['breed']
+#                     for i in range(len(breed)):
+#                         if breed[i] == "_":
+#                             breed = breed[:i] + " " + breed[i+1:]
+#                     i.breedName = breed
+#                     i.save()
+#             data = {
+# 				'message':"Success"
+# 			}
+#             return JsonResponse(data)
+#     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def signup(request):
     if request.method == 'POST':
@@ -98,7 +121,7 @@ def deleteImg(request):
         selectedImg.delete()
         if start != None:
             data = {
-            'imageList':getImageList()
+            'message':"success"
             }
         return JsonResponse(data)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
