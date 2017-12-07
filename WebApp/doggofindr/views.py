@@ -18,17 +18,6 @@ import requests
 import json
 # Create your views here.
 
-import pyrebase
-config = {
-    "apiKey": "AIzaSyA4pG8j1QbDzOceGdmivByWwQOlMJiPfgs",
-    "authDomain": "doggofindr.firebaseapp.com",
-    "databaseURL": "https://doggofindr.firebaseio.com",
-    "storageBucket": "doggofindr.appspot.com",
-    "serviceAccount": "DoggoFindr.json"
-}
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
-
 def home(request):
     imgs = Image.objects.all().order_by('-id')
     user = request.user
@@ -115,4 +104,11 @@ def deleteImg(request):
 def getImageList():
     imageList = []
     images = Image.objects.all()
-    return images
+    for i in images:
+        imageList.append({
+            'id':i.id,
+            'url':i.imgFile.url,
+            'breedName':i.breedName,
+            'author':i.author,
+        })
+    return imageList
